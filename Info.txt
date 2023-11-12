@@ -1,0 +1,2 @@
+This file will contain information regarding project and
+features added until now.
