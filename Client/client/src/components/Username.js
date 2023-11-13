@@ -5,10 +5,10 @@ import styles from '../styles/Username.module.css';
 function Username() {
   return (
     <div className="container mx-auto">
-        <div className="flex h-screen">
+        <div className="flex justify-center items-center h-screen">
             <div className={styles.glass}>
             <div className="title flex flex-col items-center">
-                <h4 className='text-5xl font-bold'>Login and interface page</h4>
+                <h4 className="yo text-5xl font-bold">Login and interface page</h4>
                 <span className='py-5 text-xl w-2/3 text-center text-gray-500'>Nevigation system for pages enables</span>
                 <form className='py-1'>
                 <div className='profile flex justify-center py-4'>
