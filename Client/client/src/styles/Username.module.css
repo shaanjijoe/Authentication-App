@@ -52,7 +52,7 @@
   width: 75%; /* Replaced w-3/4 */
   padding-top: 1rem; /* Replaced py-4 */
   padding-bottom: 1rem; /* Replaced py-4 */
-  border-radius: 3.375rem; /* Replaced rounded-lg */
+  border-radius: 0.375rem; /* Replaced rounded-lg */
   color: #f9fafb; /* Replaced text-gray-50 */
   font-size: 1.25rem; /* Replaced text-xl */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Replaced shadow-sm */
