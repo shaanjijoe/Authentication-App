@@ -61,3 +61,8 @@
 .btn:hover{
     background-color: #d8ca0cbb;
 }
+
+
+input[type='file']{
+  display: none;
+}
