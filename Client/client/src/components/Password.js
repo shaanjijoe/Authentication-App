@@ -8,7 +8,7 @@ import { passwordValidate } from '../helper/validate';
 function Password() {
     const formik =useFormik({
         initialValues :{
-            password: '@1234'
+            password: ''
         },
         validate: passwordValidate,
 
