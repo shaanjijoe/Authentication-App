@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+.glass{
+    background: rgba(255,255, 255,0.55);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px #4747470b;
+    backdrop-filter: blur (7.1px);
+    border: 1px solid rgba(255,255, 255,0.3);
+    /* @apply border-4 border-gray-50 shrink-0 h-3/4 w-[30%] rounded-3xl py-20 px-7 minw; */
+    border-width: 1rem; /* Replaced border-4 */
+  border-color: #f9fafb; /* Replaced border-gray-50 */
+  flex-shrink: 0; /* Replaced shrink-0 */
+  height: 100%; /* Replaced h-3/4 */
+  width: 70%; /* Replaced w-[30%] */
+  border-radius: 1.125rem; /* Replaced rounded-3xl */
+  padding-top: 5rem; /* Replaced py-20 */
+  padding-bottom: 5rem; /* Replaced py-20 */
+  padding-left: 1.75rem; /* Replaced px-7 */
+  padding-right: 1.75rem; /* Replaced px-7 */
+  min-width: 0; /* Replaced minw */
+}
+.profile_img{
+    border-width: 1rem; /* Replaced border-4 */
+    border-color: #f7fafc; /* Replaced border-gray-100 */
+    width: 8.4375rem; /* Replaced w-[135px] */
+    border-radius: 9999px; /* Replaced rounded-full */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Replaced shalow-lg */
+    cursor: pointer; /* Replaced cursor-pointer */
+    /* @apply border-4 border-gray-100 w-[135px] rounded-full shalow-lg cursor-pointer;
+    @apply hover:border-gray-200; */
+}
+.yo{
+    font-family: 'Poppins', sans-serif;
+}
+.textbox{
+    /* font-family: 'Poppins', sans-serif; */
+    border: none; /* Replaced border-0 */
+  padding-left: 1.25rem; /* Replaced px-5 */
+  padding-right: 1.25rem; /* Replaced px-5 */
+  padding-top: 1rem; /* Replaced py-4 */
+  padding-bottom: 1rem; /* Replaced py-4 */
+  border-radius: 1.5rem; /* Replaced rounded-xl */
+  width: 75%; /* Replaced w-3/4 */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 1px rgba(0, 0, 0, 0.1); /* Replaced shadow-sm */
+  font-size: 1.125rem; /* Replaced text-lg */
+  outline: none; /* Replaced focus:outline-none */
+    /* @apply border-0 px-5 py-4 roundedxl w-3/4 shadow-sm text-lg;
+    @apply focus:outline-none; */
+}
+.btn{
+    border: 1px solid #d1d5db; /* Replaced border */
+  background-color: #4f46e5; /* Replaced bg-indigo-500 */
+  width: 75%; /* Replaced w-3/4 */
+  padding-top: 1rem; /* Replaced py-4 */
+  padding-bottom: 1rem; /* Replaced py-4 */
+  border-radius: 3.375rem; /* Replaced rounded-lg */
+  color: #f9fafb; /* Replaced text-gray-50 */
+  font-size: 1.25rem; /* Replaced text-xl */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Replaced shadow-sm */
+  text-align: center; /* Replaced text-center */
+}
+.btn:hover{
+    background-color: #d8ca0cbb;
+}
