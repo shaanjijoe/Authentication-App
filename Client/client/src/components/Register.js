@@ -25,6 +25,7 @@ const Register = ()=> {
         validateOnChange: false,
         onSubmit: async values =>{
             
+          // Send profile pic or blank
           values= await Object.assign(values, {profile : profileImage || ' '})
           console.log(values)
         
@@ -66,8 +67,8 @@ const Register = ()=> {
 
                 </div>
                 <div className='textbox flex flex-col items-center gap-6'>
-                    <input {...formik.getFieldProps('email')} className= {styles.textbox} type="password" placeholder='Email*'/> 
-                    <input {...formik.getFieldProps('username')} className= {styles.textbox} type="password" placeholder='Username*'/> 
+                    <input {...formik.getFieldProps('email')} className= {styles.textbox} type="text" placeholder='Email*'/> 
+                    <input {...formik.getFieldProps('username')} className= {styles.textbox} type="text" placeholder='Username*'/> 
                     <input {...formik.getFieldProps('password')} className= {styles.textbox} type="password" placeholder='Password*'/> 
                     
 

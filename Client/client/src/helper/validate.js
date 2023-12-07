@@ -16,6 +16,11 @@ export async function resetpasswordValidate(values){
     return errors;
 }
 
+export async function profileValidation(values){
+    const errors = emailVerify({},values)
+    return errors;
+}
+
 
 // Register form validation
 export async function registerValidation(values){
