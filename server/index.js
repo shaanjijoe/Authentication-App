@@ -32,7 +32,7 @@ connect().then(() => {
     try{
         // server starting configs
         app.listen(port, () => {
-            console.log('Server started in http://localhost: ${port}')
+            console.log('Server started in http://localhost:', port);
         })
 
     } catch (error) {

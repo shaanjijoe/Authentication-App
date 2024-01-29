@@ -1,6 +1,28 @@
 const UserModels = require('../models/User.model');
 const UserModel = UserModels.UserModel;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const ENV = require('../config');
+
+
+
+const verifyUser = async(req, res, next)=>{
+    try {  
+        const { username } = req.method == "GET" ? req.query : req.body;
+
+        // checking if the user exists
+        let exist = await UserModel.findOne({ username });
+        if(!exist) return res.status(404).send({ error : "User not present in database!"});
+        next();
+
+    } catch (error) {
+        return res.status(404).send({ error: "Authentication Error"});
+    }
+}
+
+
+
+
 /** POST: http://localhost:8000/api/register 
  * @param : {
   "username" : "example123",
@@ -16,6 +38,7 @@ const bcrypt = require('bcrypt');
 const register = async(req,res) =>{
     try {
         const { username, email, password, profile} = req.body;
+        // console.log("Someone connected");
 
 
     // Mongo dropped support for callbacks from its node.js driver as of version 5.0 in favour of a 
@@ -102,13 +125,73 @@ const register = async(req,res) =>{
 }
 */
 const login= async(req,res) =>{
-   res.json("Login route");
+   
+    const { username, password} = req.body;
+    try{
+        UserModel.findOne({ username })
+        .then( user => {
+            bcrypt.compare(password, user.password)
+            .then(passwordCheck => {
+
+                if(!passwordCheck) return res.status(400).send({ error: "Don't have Password"});
+
+                const token = jwt.sign({
+                    userId: user._id,
+                    username : user.username
+                }, ENV.JWT_SECRET , { expiresIn : "24h"});
+
+                return res.status(200).send({
+                    msg: "Login Success",
+                    username: user.username,
+                    token
+                });   
+                
+            })
+            .catch(error => {
+                return res.status(400).send({ error: "Password does not Match"})
+            })
+        })
+        .catch(error => {
+            return res.status(404).send({error: "User nor registered"});
+        })
+    } catch(error) {
+        return res.status(500).send(error);
+    }
 }
 
 
 /** GET: http://localhost:8000/api/user/example123 */
 const getUser = async(req,res) =>{
-    res.json("getUser route");
+    const { username } = req.params;
+    // console.log(username);
+    try {
+        
+        if(!username) return res.status(501).send({ error: "Invalid username"});
+
+        UserModel.findOne({ username }).then((user) =>{
+            // if(err) return res.status(500).send({ err });
+            console.log(user);
+            if(!user) return res.status(501).send({ error : "Couldn't Find the User"});
+
+            // mongoose return unnecessary data with object so convert it into json
+            // const { password, ...rest } = Object.assign({}, user.toJSON());
+
+            const data = {
+                _id : user._id,
+                username: user.username,
+                email: user.email,
+                profile: user.profile,
+                _v: user._v
+            }
+
+            return res.status(201).send(data);
+        }).catch(err => { return res.status(500).send({ err });})
+        
+
+    } catch (error) {
+        return res.status(404).send({ error : "Cannot Find User Data"});
+    }
+
 }
 
 /** PUT: http://localhost:8000/api/updateuser 
@@ -153,5 +236,5 @@ const  resetPassword = async(req,res) =>{
     res.json("Reset password route");
 }
 
-module.exports = {register, login, getUser, updateUser, generateOTP, verifyOTP, createResetSession, resetPassword }; 
+module.exports = {register, login, getUser, updateUser, generateOTP, verifyOTP, createResetSession, resetPassword, verifyUser }; 
  
