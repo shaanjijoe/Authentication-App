@@ -27,7 +27,7 @@ const localVariables = (req, res, next)=> {
         OTP : null,
         resetSession : false
     }
-    next()
+    next();
 }
 
 module.exports = {Auth, localVariables};

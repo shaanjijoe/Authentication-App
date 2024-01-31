@@ -268,7 +268,41 @@ const  createResetSession = async(req,res) =>{
 // update the password when we have valid session
 /** PUT: http://localhost:8000/api/resetPassword */
 const  resetPassword = async(req,res) =>{
-    res.json("Reset password route");
+    try {
+        
+        if(!req.app.locals.resetSession) return res.status(440).send({error : "Session expired!"});
+
+        const { username, password } = req.body;
+
+        try {
+            
+            UserModel.findOne({ username})
+                .then(user => {
+                    bcrypt.hash(password, 10)
+                        .then(hashedPassword => {
+                            UserModel.updateOne({ username : user.username },
+                            { password: hashedPassword}).then(data=>{
+                                req.app.locals.resetSession = false; // reset session
+                                return res.status(201).send({ msg : "Record Updated...!"})
+                            }).catch(err=> {throw err});
+                        })
+                        .catch( e => {
+                            return res.status(500).send({
+                                error : "Enable to hashed password"
+                            })
+                        })
+                })
+                .catch(error => {
+                    return res.status(404).send({ error : "Username not Found"});
+                })
+
+        } catch (error) {
+            return res.status(500).send({ error })
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error })
+    }
 }
 
 module.exports = {register, login, getUser, updateUser, generateOTP, verifyOTP, createResetSession, resetPassword, verifyUser }; 
