@@ -1,12 +1,13 @@
 const { Router } = require('express')
 const router = Router();
 const controller = require('../controllers/appController');
-const middleware = require('../middleware/auth')
+const middleware = require('../middleware/auth');
+const registerMail = require('../controllers/mailController');
 
 
 // POST Method
 router.route('/register').post(controller.register)
-// router.route('/registermail').post();
+router.route('/registermail').post(registerMail);
 router.route('/authenticate').post((req, res) => res.end());
 router.route('/login').post(controller.verifyUser,controller.login);
 
