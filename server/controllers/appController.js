@@ -3,6 +3,8 @@ const UserModel = UserModels.UserModel;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const ENV = require('../config');
+// const mongoose = require('mongoose');
+const otpGenerator = require('otp-generator');
 
 
 
@@ -204,21 +206,51 @@ body: {
     profile : ''
 }
 */
-const updateUser = async(req,res) =>{
-    res.json("update user route");
-}
+const updateUser = async (req, res) => {
+    try {
+
+    //   const id2 = req.query.id;
+    //   const id = new mongoose.Types.ObjectId(id2);
+      const { userId } = req.user;
+  
+      if (userId) {
+        const body = req.body;
+  
+        // Use the new syntax for updateOne
+        const result = await UserModel.updateOne({ _id: userId }, body);
+  
+        if (result ) {
+          return res.status(201).send({ msg: "Record Updated...!" });
+        } else {
+          return res.status(404).send({ error: "User Not Found...!" });
+        }
+      } else {
+        return res.status(401).send({ error: "User Not Found...!" });
+      }
+    } catch (error) {
+      return res.status(500).send({ error: error.message });
+    }
+  };
+  
 
 
 
 /** GET: http://localhost:8000/api/generateOTP */
 const generateOTP = async(req,res) =>{
-    res.json("Generate OTP route");
+    req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
+    res.status(201).send({ code: req.app.locals.OTP })
 }
 
 
 /** GET: http://localhost:8000/api/verifyOTP */
 const  verifyOTP = async(req,res) =>{
-    res.json("Verify OTP route");
+    const { code } = req.query;
+    if(parseInt(req.app.locals.OTP) === parseInt(code)){
+        req.app.locals.OTP = null; // reset the OTP value
+        req.app.locals.resetSession = true; // start session for reset password
+        return res.status(201).send({ msg: 'Verify Successsfully!'})
+    }
+    return res.status(400).send({ error: "Invalid OTP"});
 }
 
 
@@ -226,7 +258,10 @@ const  verifyOTP = async(req,res) =>{
 // successfully redirect user when OTP is valid
 /** GET: http://localhost:8000/api/createResetSession */
 const  createResetSession = async(req,res) =>{
-    res.json("Reset session route");
+    if(req.app.locals.resetSession){
+        return res.status(201).send({ flag : req.app.locals.resetSession})
+   }
+   return res.status(440).send({error : "Session expired!"})
  }
 
 
