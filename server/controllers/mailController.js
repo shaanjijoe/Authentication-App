@@ -1,8 +1,7 @@
-import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
+const nodemailer = require('nodemailer');
+const Mailgen = require('mailgen');
 
-import ENV from '../config.js';
-
+const ENV = require('../config.js');
 
 // https://ethereal.email/create
 let nodeConfig = {
@@ -25,23 +24,15 @@ let MailGenerator = new Mailgen({
     }
 })
 
-/** POST: http://localhost:8080/api/registerMail 
- * @param: {
-  "username" : "example123",
-  "userEmail" : "admin123",
-  "text" : "",
-  "subject" : "",
-}
-*/
-export const registerMail = async (req, res) => {
+const registerMail = async (req, res) => {
     const { username, userEmail, text, subject } = req.body;
 
     // body of the email
     var email = {
         body : {
             name: username,
-            intro : text || 'Welcome to Daily Tuition! We\'re very excited to have you on board.',
-            outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
+            intro : text || 'Registration mail',
+            outro: 'Need help, or have questions? Just reply to this email.'
         }
     }
 
@@ -61,4 +52,6 @@ export const registerMail = async (req, res) => {
         })
         .catch(error => res.status(500).send({ error }))
 
-} 
+}
+
+module.exports = { registerMail};

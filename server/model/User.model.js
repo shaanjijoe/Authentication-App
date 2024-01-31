@@ -22,5 +22,5 @@ export const UserSchema = new mongoose.Schema({
     address: { type: String},
     profile: { type: String}
 });
-
+ 
 export default mongoose.model.Users || mongoose.model('User', UserSchema);
